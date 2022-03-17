@@ -6,9 +6,12 @@ import java.util.Scanner;
 public class Agencia {
 	
 	private ArrayList<Vehiculo> flota ;
-	private ArrayList<Vehiculo> alquilados = new ArrayList<>();
+	private ArrayList<Vehiculo> alquilados=new ArrayList<>();
 	private ArrayList<Empresa> empresas;
 	private int edad = 1;
+	private int numCoches = 0;
+	private int numFurgonetas =0;
+	private int numMotos = 0 ;
 	
 	
 	public Agencia (ArrayList<Vehiculo> flota ,ArrayList<Empresa> empresas ) {
@@ -22,78 +25,182 @@ public class Agencia {
 		System.out.println("Dia " + this.edad);
 		int empresa;
 		do {
-			System.out.println("Que empresa desea alquilar?");
+			System.out.println("Que empresa desea alquilar ?");
 			empresa = sc.nextInt();
 			 if(empresa==-1) {
 				 pasarDia();
 			 }
-			System.out.println(this.empresas.get(empresa -1).getNombre());
-			System.out.println("Que vehiculo desea alquilar?");
-			int tipo = sc.nextInt();
-				if(tipo==1) {
-					System.out.println("Un Coche");
+			else {
+				System.out.println(this.empresas.get(empresa - 1).getNombre());
+				System.out.println("Que vehiculo desea alquilar ?");
+				int tipo = sc.nextInt();
+				
+					if (tipo == 1 && this.numCoches <=7 ) {
+						System.out.println("Un Coche");
+						System.out.println("Durante cuantos dias ?");
+						int dias = sc.nextInt();
+						System.out.println("Durante " + dias + " dias");
+						alquilarVehiculo(empresa, tipo, dias);
+					}
+				
+					if (tipo == 2 &&  this.numFurgonetas <=3 ) {
+						System.out.println("Una furgoneta");
+						System.out.println("Durante cuantos dias ?");
+						int dias = sc.nextInt();
+						System.out.println("Durante " + dias + " dias");
+						alquilarVehiculo(empresa, tipo, dias);
+					}
+					if (tipo == 3 && this.numMotos<=2  ) {
+						System.out.println("Una moto");
+						System.out.println("Durante cuantos dias ?");
+						int dias = sc.nextInt();
+						System.out.println("Durante " + dias + " dias");
+						alquilarVehiculo(empresa, tipo, dias);
+					}
+					
+				
+				else {
+					System.out.println("No quedan Vehiculos");
 				}
-	
-				if(tipo==2) {
-					System.out.println("Una furgoneta");
-				}
-				if(tipo==3) {
-					System.out.println("Una moto");
-				}
-			System.out.println("Durante cuantos dias?");
-			int dias = sc.nextInt();
-			System.out.println("Durante "+ dias + " dias");
-			alquilarVehiculo(empresa , tipo , dias);
+			}
 		}while(empresa!=-1);
 		
 	}
 	public void pasarDia() {
 		this.edad++;
+		System.out.println("---------------------");
 		System.out.println("VEHICULOS SIN ALQUILAR");
 		for (int i = 0; i < this.flota.size(); i++) {
-			this.flota.get(i).toStringSin();
+			System.out.println( this.flota.get(i).getClass().getSimpleName() + this.flota.get(i).toStringSin());
+			
 		}
+		System.out.println("---------------------");
+		System.out.println("VEHICULOS ALQUILADOS");
 		for (int i = 0; i < alquilados.size(); i++) {
-			alquilados.get(i).toStringCon();
+			System.out.println(this.flota.get(i).getClass().getSimpleName() + alquilados.get(i).toStringCon());
 			alquilados.get(i).setDias(alquilados.get(i).getDias()-1);
 			if(alquilados.get(i).getDias()<0) {
 				alquilados.get(i).setEmpresa(null);
 				flota.add(alquilados.get(i));
 				alquilados.remove(i);
+				if(alquilados.get(i) instanceof Coche) {
+					this.numCoches--;
+				}
+				if(alquilados.get(i) instanceof Furgoneta) {
+					this.numFurgonetas--;
+				}
+				if(alquilados.get(i) instanceof Moto) {
+					this.numMotos--;
+				}
 			}
 			
 		}
 	}
-	public void alquilarVehiculo(int empresa, int tipo ,int dias) {
-		for (int i = 0; i < flota.size(); i++) {
-			
-			if(tipo==1 &&  flota.get(i) instanceof Coche) {
-				flota.get(i).setEmpresa(this.empresas.get(empresa));
-				flota.get(i).setAlquiler(true);
-				flota.get(i).setDias(dias);
-				alquilados.add(flota.get(i));
-				flota.remove(i);
-				System.out.println("asdasdasdasd");
-				break;
+
+	public void alquilarVehiculo(int empresa, int tipo, int dias) {
+
+		if (tipo == 1) {
+			for (int i = 0; i < flota.size(); i++) {
+				if (flota.get(i) instanceof Coche) {
+					flota.get(i).setEmpresa(this.empresas.get(empresa));
+					flota.get(i).setAlquiler(true);
+					flota.get(i).setDias(dias);
+					alquilados.add(flota.get(i));
+					flota.remove(i);
+					System.out.println("Coche alquilado");
+					this.numCoches++;
+					System.out.println(this.numCoches);
+					break;
+				}
 			}
-			if (tipo==2 && flota.get(i) instanceof Furgoneta) {
-				flota.get(i).setEmpresa(this.empresas.get(empresa));
-				flota.get(i).setAlquiler(true);
-				flota.get(i).setDias(dias);
-				alquilados.add(flota.get(i));
-				flota.remove(i);
-				break;
-			}
-			if(tipo==3 && flota.get(i) instanceof Moto) {
-				flota.get(i).setEmpresa(this.empresas.get(empresa));
-				flota.get(i).setAlquiler(true);
-				flota.get(i).setDias(dias);
-				alquilados.add(flota.get(i));
-				flota.remove(i);
-				break;
-			}
-			break;
 		}
+		if (tipo == 2) {
+			for (int i = 0; i < flota.size(); i++) {
+				if (flota.get(i) instanceof Furgoneta) {
+					flota.get(i).setEmpresa(this.empresas.get(empresa));
+					flota.get(i).setAlquiler(true);
+					flota.get(i).setDias(dias);
+					alquilados.add(flota.get(i));
+					flota.remove(i);
+					System.out.println("Furgoneta alquilada");
+					this.numFurgonetas++;
+					break;
+				}
+			}
+		}
+		if (tipo == 3) {
+			for (int i = 0; i < flota.size(); i++) {
+				if (flota.get(i) instanceof Moto) {
+					flota.get(i).setEmpresa(this.empresas.get(empresa));
+					flota.get(i).setAlquiler(true);
+					flota.get(i).setDias(dias);
+					alquilados.add(flota.get(i));
+					flota.remove(i);
+					this.numMotos++;
+
+					System.out.println(this.numMotos);
+					System.out.println("Moto alquilada");
+					break;
+				}
+			}
+
+		}
+	}
+
+	public ArrayList<Vehiculo> getFlota() {
+		return flota;
+	}
+
+	public void setFlota(ArrayList<Vehiculo> flota) {
+		this.flota = flota;
+	}
+
+	public ArrayList<Vehiculo> getAlquilados() {
+		return alquilados;
+	}
+
+	public void setAlquilados(ArrayList<Vehiculo> alquilados) {
+		this.alquilados = alquilados;
+	}
+
+	public ArrayList<Empresa> getEmpresas() {
+		return empresas;
+	}
+
+	public void setEmpresas(ArrayList<Empresa> empresas) {
+		this.empresas = empresas;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	public int getNumCoches() {
+		return numCoches;
+	}
+
+	public void setNumCoches(int numCoches) {
+		this.numCoches = numCoches;
+	}
+
+	public int getNumFurgonetas() {
+		return numFurgonetas;
+	}
+
+	public void setNumFurgonetas(int numFurgonetas) {
+		this.numFurgonetas = numFurgonetas;
+	}
+
+	public int getNumMotos() {
+		return numMotos;
+	}
+
+	public void setNumMotos(int numMotos) {
+		this.numMotos = numMotos;
 	}
 
 }

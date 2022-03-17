@@ -9,13 +9,13 @@ public class Vehiculo {
 	
 	
 	public String toStringCon() {
-		return "Vehiculo [matricula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + ", dias=" + dias
-				+ ", empresa=" + empresa + "]";
+		return " matricula= " + matricula + ", marca= " + marca + ", modelo= " + modelo + ", dias= " + dias
+				+ ", empresa= " + empresa.getNombre() ;
 	}
 
 	
 	public String toStringSin() {
-		return "Vehiculo [matricula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + "]";
+		return " matricula= " + matricula + ", marca= " + marca + ", modelo= " + modelo ;
 	}
 	
 	public int getDias() {
