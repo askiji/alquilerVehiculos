@@ -30,6 +30,9 @@ public class Agencia {
 			 if(empresa==-1) {
 				 pasarDia();
 			 }
+			 if(empresa==-2) {
+				 
+			 }
 			else {
 				empresa--;
 				System.out.println(this.empresas.get(empresa).getNombre());
