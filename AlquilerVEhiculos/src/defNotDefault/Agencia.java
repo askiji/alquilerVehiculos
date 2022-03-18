@@ -1,13 +1,14 @@
 package defNotDefault;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Comparator;
 
 public class Agencia {
 	
 	private ArrayList<Vehiculo> flota ;
 	private ArrayList<Vehiculo> alquilados=new ArrayList<>();
 	private ArrayList<Empresa> empresas;
+	private ArrayList<Vehiculo> ordenados= new ArrayList<>();
 	private int edad = 1;
 	private int numCoches = 0;
 	private int numFurgonetas =0;
@@ -26,12 +27,14 @@ public class Agencia {
 		int empresa;
 		do {
 			System.out.println("Que empresa desea alquilar ?");
-			empresa = sc.nextInt(-1,5);
+			empresa = sc.nextInt(-2,5);
 			 if(empresa==-1) {
+				 imprimir(alquilados);
 				 pasarDia();
 			 }
-			 if(empresa==-2) {
-				 
+			 else if(empresa==-2) {
+				 ordenar();
+				 imprimir(ordenados);
 			 }
 			else {
 				empresa--;
@@ -73,8 +76,14 @@ public class Agencia {
 		}while(empresa!=-1);
 		
 	}
-	public void pasarDia() {
-		this.edad++;
+	public void ordenar() {
+   		ordenados= (ArrayList<Vehiculo>) alquilados.clone();
+		
+		ordenados.sort(Comparator.comparing(Vehiculo::getDias));
+		
+	}
+		
+	public void imprimir(ArrayList<Vehiculo>  foo) {
 		System.out.println("---------------------");
 		System.out.println("VEHICULOS SIN ALQUILAR");
 		for (int i = 0; i < this.flota.size(); i++) {
@@ -83,8 +92,14 @@ public class Agencia {
 		}
 		System.out.println("---------------------");
 		System.out.println("VEHICULOS ALQUILADOS");
+		for (int i = 0; i < foo.size(); i++) {
+			System.out.println(foo.get(i).getClass().getSimpleName() + foo.get(i).toStringCon());
+		}
+		
+	}
+	public void pasarDia() {
+		this.edad++;
 		for (int i = 0; i < alquilados.size(); i++) {
-			System.out.println(this.alquilados.get(i).getClass().getSimpleName() + alquilados.get(i).toStringCon());
 			alquilados.get(i).setDias(alquilados.get(i).getDias()-1);
 			if(alquilados.get(i).getDias()<0) {
 				alquilados.get(i).setEmpresa(null);
@@ -153,6 +168,11 @@ public class Agencia {
 
 		}
 	}
+
+	
+	
+//	Comparator<Vehiculo> compararDias = 
+//			(Vehiculo v1, Vehiculo v2) -> v1.getDias().compareTo(v2.getDias());
 
 	public ArrayList<Vehiculo> getFlota() {
 		return flota;

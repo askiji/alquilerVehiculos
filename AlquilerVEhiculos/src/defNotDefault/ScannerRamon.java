@@ -19,8 +19,8 @@ public class ScannerRamon {
 				entrada = sc.nextLine();
 			}while(!isNumeric(entrada));
 			numero = Integer.valueOf(entrada);
-			if (numero<a || numero>b) System.out.println("Numero fuera de rango");
-		}while(numero<a || numero>b);
+			if ((numero<a || numero>b) || numero==0) System.out.println("Numero fuera de rango");
+		}while((numero<a || numero>b) || numero==0);
 		
 		return numero;
 	}
