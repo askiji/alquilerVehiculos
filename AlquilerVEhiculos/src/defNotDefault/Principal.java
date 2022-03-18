@@ -22,8 +22,8 @@ public class Principal {
 		arr.add(coche7);
 		
 		
-		Moto moto1= new Moto("001m", "01c", "1c", 1, false);
-		Moto moto2= new Moto("002m", "02c", "2c", 2, true);
+		Moto moto1= new Moto("001m", "01m", "1m", 1, false);
+		Moto moto2= new Moto("002m", "02m", "2m", 2, true);
 		arr.add(moto1);
 		arr.add(moto2);
 		
@@ -33,7 +33,7 @@ public class Principal {
 		arr.add(furgoneta1);
 		arr.add(furgoneta2);
 		arr.add(furgoneta3);
-		
+//		Empresa fake = new Empresa("fake","Fake");
 		Empresa empresa1 = new Empresa("1","1e");
 		Empresa empresa2 = new Empresa("2","2e");
 		Empresa empresa3 = new Empresa("3","3e");
@@ -41,6 +41,7 @@ public class Principal {
 		Empresa empresa5 = new Empresa("5","5e");
 		Empresa empresa6 = new Empresa("6","6e");
 		ArrayList<Empresa> arrEmpresa= new ArrayList<>();
+//		arrEmpresa.add(fake);
 		arrEmpresa.add(empresa1);
 		arrEmpresa.add(empresa2);
 		arrEmpresa.add(empresa3);
@@ -50,9 +51,9 @@ public class Principal {
 		
 		Agencia agencia = new Agencia(arr, arrEmpresa);
 		
-		agencia.cuestionario();
+		while (true) agencia.cuestionario();
 		
-		System.out.println("end");
+//		System.out.println("end");
 		
 	}
 

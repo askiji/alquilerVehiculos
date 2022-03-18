@@ -14,48 +14,52 @@ public class Agencia {
 	private int numMotos = 0 ;
 	
 	
-	public Agencia (ArrayList<Vehiculo> flota ,ArrayList<Empresa> empresas ) {
+	public Agencia (ArrayList<Vehiculo> flota ,ArrayList<Empresa> empresas) {
 		this.flota= flota;
 		this.empresas = empresas;
 		
 	}
 	
 	public void cuestionario() {
-		Scanner sc = new Scanner(System.in);
+		ScannerRamon sc = new ScannerRamon();
 		System.out.println("Dia " + this.edad);
 		int empresa;
 		do {
 			System.out.println("Que empresa desea alquilar ?");
-			empresa = sc.nextInt();
+			empresa = sc.nextInt(-1,5);
 			 if(empresa==-1) {
 				 pasarDia();
 			 }
 			else {
-				System.out.println(this.empresas.get(empresa - 1).getNombre());
+				empresa--;
+				System.out.println(this.empresas.get(empresa).getNombre());
 				System.out.println("Que vehiculo desea alquilar ?");
-				int tipo = sc.nextInt();
+				int tipo = sc.nextInt(1,3);
 				
-					if (tipo == 1 && this.numCoches <=7 ) {
+					if (tipo == 1 && this.numCoches <7 ) {
 						System.out.println("Un Coche");
 						System.out.println("Durante cuantos dias ?");
-						int dias = sc.nextInt();
+						int dias = sc.nextInt(1,100000);
 						System.out.println("Durante " + dias + " dias");
 						alquilarVehiculo(empresa, tipo, dias);
+						break;
 					}
 				
-					if (tipo == 2 &&  this.numFurgonetas <=3 ) {
+					if (tipo == 2 &&  this.numFurgonetas <3 ) {
 						System.out.println("Una furgoneta");
 						System.out.println("Durante cuantos dias ?");
-						int dias = sc.nextInt();
+						int dias = sc.nextInt(1,100000);
 						System.out.println("Durante " + dias + " dias");
 						alquilarVehiculo(empresa, tipo, dias);
+						break;
 					}
-					if (tipo == 3 && this.numMotos<=2  ) {
+					if (tipo == 3 && this.numMotos<2  ) {
 						System.out.println("Una moto");
 						System.out.println("Durante cuantos dias ?");
-						int dias = sc.nextInt();
+						int dias = sc.nextInt(1,100000);
 						System.out.println("Durante " + dias + " dias");
 						alquilarVehiculo(empresa, tipo, dias);
+						break;
 					}
 					
 				
@@ -77,12 +81,11 @@ public class Agencia {
 		System.out.println("---------------------");
 		System.out.println("VEHICULOS ALQUILADOS");
 		for (int i = 0; i < alquilados.size(); i++) {
-			System.out.println(this.flota.get(i).getClass().getSimpleName() + alquilados.get(i).toStringCon());
+			System.out.println(this.alquilados.get(i).getClass().getSimpleName() + alquilados.get(i).toStringCon());
 			alquilados.get(i).setDias(alquilados.get(i).getDias()-1);
 			if(alquilados.get(i).getDias()<0) {
 				alquilados.get(i).setEmpresa(null);
 				flota.add(alquilados.get(i));
-				alquilados.remove(i);
 				if(alquilados.get(i) instanceof Coche) {
 					this.numCoches--;
 				}
@@ -92,13 +95,14 @@ public class Agencia {
 				if(alquilados.get(i) instanceof Moto) {
 					this.numMotos--;
 				}
+				alquilados.remove(i);
 			}
 			
 		}
 	}
 
 	public void alquilarVehiculo(int empresa, int tipo, int dias) {
-
+		System.out.println("El tipo es " + tipo);
 		if (tipo == 1) {
 			for (int i = 0; i < flota.size(); i++) {
 				if (flota.get(i) instanceof Coche) {
@@ -138,7 +142,7 @@ public class Agencia {
 					flota.remove(i);
 					this.numMotos++;
 
-					System.out.println(this.numMotos);
+					
 					System.out.println("Moto alquilada");
 					break;
 				}
