@@ -36,6 +36,9 @@ public class Agencia {
 				 ordenar();
 				 imprimir(ordenados);
 			 }
+			 else if (empresa==-3) {
+				 
+			 }
 			else {
 				empresa--;
 				System.out.println(this.empresas.get(empresa).getNombre());
